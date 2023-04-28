@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.spotify.api.v1.dto.SpotifyArtist;
+import com.spotify.api.v1.dto.SpotifyImage;
 import com.spotify.api.v1.dto.SpotifyItem;
 
 
@@ -39,6 +40,12 @@ public abstract class SpotifyItemDeserializer<I extends SpotifyItem> extends Jso
   }
 
 
+  /**
+   * @param artistsNode
+   * @return
+   * @throws IOException
+   * @throws JacksonException
+   */
   protected SpotifyArtist[] deserializeArtists(
     JsonNode artistsNode) throws IOException, JacksonException
   {
@@ -57,5 +64,35 @@ public abstract class SpotifyItemDeserializer<I extends SpotifyItem> extends Jso
     artistArray = artistList.toArray(artistArray);
     
     return artistArray;
+  }
+
+
+  /**
+   * @param imagesNode
+   * @return
+   * @throws IOException
+   * @throws JacksonException
+   */
+  protected SpotifyImage[] deserializeImages(
+    JsonNode imagesNode) throws IOException, JacksonException
+  {
+    List<SpotifyImage> imageList = new ArrayList<SpotifyImage>();
+    SpotifyImage[] imageArray;
+  
+    for (final JsonNode imageNode : imagesNode)
+    {
+      SpotifyImage spotifyImage = new SpotifyImage();
+  
+      spotifyImage.setHeight(imageNode.get("height").asInt());
+      spotifyImage.setUrl(imageNode.get("url").asText());
+      spotifyImage.setWidth(imageNode.get("width").asInt());
+
+      imageList.add(spotifyImage);
+    }
+    
+    imageArray = new SpotifyImage[imageList.size()];
+    imageArray = imageList.toArray(imageArray);
+    
+    return imageArray;
   }
 }

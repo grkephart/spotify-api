@@ -35,10 +35,16 @@ public class SpotifyAlbumDeserializer extends SpotifyItemDeserializer<SpotifyAlb
   {
     SpotifyAlbum spotifyAlbum = new SpotifyAlbum();
     JsonNode artistsNode = node.get("artists");
-
+    JsonNode imagesNode = node.get("images");
+    
     if (artistsNode != null)
     {
       spotifyAlbum.setArtists(deserializeArtists(artistsNode));
+    }
+    
+    if (imagesNode != null)
+    {
+      spotifyAlbum.setImages(deserializeImages(imagesNode));
     }
 
     super.deserialize(node, spotifyAlbum);

@@ -44,8 +44,14 @@ public class SpotifyArtistDeserializer extends SpotifyItemDeserializer<SpotifyAr
     JsonNode node) throws IOException, JacksonException
   {
     SpotifyArtist spotifyArtist = new SpotifyArtist();
+    JsonNode imagesNode = node.get("images");
 
     super.deserialize(node, spotifyArtist);
+    
+    if (imagesNode != null)
+    {
+      spotifyArtist.setImages(deserializeImages(imagesNode));
+    }
 
     return spotifyArtist;
   }
