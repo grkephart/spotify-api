@@ -419,20 +419,32 @@ public class SpotifyServiceImpl implements SpotifyService
     RetryableException e) throws InterruptedException
   {
     if (attempts > this.maxAttemptsPerCall)
+    {
       throw e;
+    }
     else
     {
-      Calendar cal = Calendar.getInstance();
-      long nowMs = cal.getTimeInMillis();
       Date retryAfter = e.retryAfter();
-      long retryAfterMs = retryAfter.getTime();
-      long diffMs = retryAfterMs - nowMs;
-      Date now = cal.getTime();
 
-      log.info("[handleRetryableException] retry after " + this.df.format(retryAfter) + " => "
-               + (diffMs / 1000) + " seconds. Now is " + this.df.format(now));
+      if (retryAfter != null)
+      {
+        Calendar cal = Calendar.getInstance();
+        long nowMs = cal.getTimeInMillis();
+        long retryAfterMs = retryAfter.getTime();
+        long diffMs = retryAfterMs - nowMs;
+        Date now = cal.getTime();
 
-      Thread.sleep(diffMs);
+        log.info("[handleRetryableException] retry after " + this.df.format(retryAfter) + " => "
+                 + (diffMs / 1000) + " seconds. Now is " + this.df.format(now));
+
+        Thread.sleep(diffMs);
+      }
+      else
+      {
+        log.error("[handleRetryableException] no retryAfter.");
+        
+        throw e;
+      }
     }
   }
 

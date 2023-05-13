@@ -15,12 +15,12 @@ import com.spotify.api.v1.converters.SpotifyTrackDeserializer;
 @JsonDeserialize(using = SpotifyTrackDeserializer.class)
 public class SpotifyTrack extends SpotifyItem
 {
-  private SpotifyAlbum      album;
-  private SpotifyArtist[]   artists;
-  private int               discNumber;
-  private int               duration;
-  private Integer           popularity;
-  private int               trackNumber;
+  private SpotifyAlbum    album;
+  private SpotifyArtist[] artists;
+  private int             discNumber;
+  private int             duration;
+  private Integer         popularity;
+  private int             trackNumber;
 
   /**
    * 
@@ -28,6 +28,20 @@ public class SpotifyTrack extends SpotifyItem
   public SpotifyTrack()
   {
 
+  }
+
+
+  /**
+   * @param name
+   * @param artist
+   * @param album
+   */
+  public SpotifyTrack(String id, String name, String href, String type, String uri, SpotifyAlbum album,
+                      SpotifyArtist... artists)
+  {
+    super(id, name, href, type, uri);
+    this.artists =  artists;
+    this.album = album;
   }
 
 

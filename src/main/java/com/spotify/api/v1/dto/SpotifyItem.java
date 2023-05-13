@@ -28,6 +28,16 @@ public class SpotifyItem
   }
 
 
+  public SpotifyItem(String id, String name, String href, String type, String uri)
+  {
+    this.id = id;
+    this.name = name;
+    this.href = href;
+    this.type = type;
+    this.uri = uri;
+  }
+
+
   /* (non-Javadoc)
    * @see java.lang.Object#equals(java.lang.Object)
    */
@@ -42,14 +52,16 @@ public class SpotifyItem
     if (getClass() != obj.getClass())
       return false;
     SpotifyItem other = (SpotifyItem)obj;
-    return Objects.equals(href, other.href) && Objects.equals(id, other.id)
-           && Objects.equals(name, other.name) && Objects.equals(type, other.type)
+    return Objects.equals(href, other.href) //
+           && Objects.equals(id, other.id)//
+           && Objects.equals(name, other.name) //
+           && Objects.equals(type, other.type)//
            && Objects.equals(uri, other.uri);
   }
 
 
   /**
-   * A link to the Web API endpoint providing full details of the album.
+   * A link to the Web API endpoint providing full details of the album/artist/track.
    * 
    * @return the href
    */
@@ -66,7 +78,7 @@ public class SpotifyItem
 
 
   /**
-   * The name of the album. In case of an album takedown, the value may be an empty string.
+   * The name of the album/artist/track. In case of an album takedown, the value may be an empty string.
    * 
    * @return the name
    */
@@ -78,7 +90,7 @@ public class SpotifyItem
 
   /**
    * The object type.
-   * Allowed value:"album"
+   * Allowed value:"album", "artist", "track"
    * 
    * @return the type
    */

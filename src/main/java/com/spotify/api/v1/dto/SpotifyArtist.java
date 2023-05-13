@@ -13,10 +13,10 @@ import java.util.Arrays;
  */
 public class SpotifyArtist extends SpotifyItem
 {
-  private String[]          genres;
-  private SpotifyImage[]    images;
-  private boolean           imported;
-  private int               popularity;
+  private String[]       genres;
+  private SpotifyImage[] images;
+  private boolean        imported;
+  private int            popularity;
 
   /**
    * 
@@ -24,6 +24,12 @@ public class SpotifyArtist extends SpotifyItem
   public SpotifyArtist()
   {
 
+  }
+
+
+  public SpotifyArtist(String id, String name, String href, String type, String uri)
+  {
+    super(id, name, href, type, uri);
   }
 
 

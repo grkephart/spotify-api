@@ -19,6 +19,7 @@ public class SpotifyAlbum extends SpotifyItem
 {
   public static final String ALBUM_TYPE       = "album";
   public static final String SINGLE_TYPE      = "single";
+  public static final String COMPILATION_TYPE = "compilation";
   private String             albumType;
   private SpotifyArtist[]    artists;
   private SpotifyImage[]     images;
@@ -35,6 +36,21 @@ public class SpotifyAlbum extends SpotifyItem
 
   }
 
+
+  /**
+   * @param name
+   * @param albumType
+   * @param artists
+   */
+  public SpotifyAlbum(String id, String name, String href, String type, String uri,
+                      String albumType, SpotifyArtist... artists)
+  {
+    super(id, name, href, type, uri);
+    this.artists =  artists;
+    this.albumType = albumType;
+  }
+
+
   /* (non-Javadoc)
    * @see java.lang.Object#equals(java.lang.Object)
    */
@@ -50,8 +66,8 @@ public class SpotifyAlbum extends SpotifyItem
       return false;
     SpotifyAlbum other = (SpotifyAlbum)obj;
     return Objects.equals(albumType, other.albumType)
-//           && Objects.equals(releaseDate, other.releaseDate)
-//           && Objects.equals(releaseDatePrecision, other.releaseDatePrecision)
+           //           && Objects.equals(releaseDate, other.releaseDate)
+           //           && Objects.equals(releaseDatePrecision, other.releaseDatePrecision)
            && totalTracks == other.totalTracks;
   }
 
