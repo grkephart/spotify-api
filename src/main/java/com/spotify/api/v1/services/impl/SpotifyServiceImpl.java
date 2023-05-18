@@ -123,7 +123,7 @@ public class SpotifyServiceImpl implements SpotifyService
       }
       catch (Exception e)
       {
-        log.error("[getArtist] e=" + e.getClass().getSimpleName(), e);
+        log.error("[getAlbum] e=" + e.getClass().getSimpleName(), e);
         throw e;
       }
     }
@@ -168,7 +168,7 @@ public class SpotifyServiceImpl implements SpotifyService
       }
       catch (Exception e)
       {
-        log.error("[getArtist] e=" + e.getClass().getSimpleName(), e);
+        log.error("[getAlbumTracks] e=" + e.getClass().getSimpleName(), e);
         throw e;
       }
     }
@@ -285,7 +285,7 @@ public class SpotifyServiceImpl implements SpotifyService
       }
       catch (Exception e)
       {
-        log.error("[getArtist] e=" + e.getClass().getSimpleName(), e);
+        log.error("[getArtistAlbums] e=" + e.getClass().getSimpleName(), e);
         throw e;
       }
     }
@@ -357,7 +357,7 @@ public class SpotifyServiceImpl implements SpotifyService
       }
       catch (Exception e)
       {
-        log.error("[getArtist] e=" + e.getClass().getSimpleName(), e);
+        log.error("[getTrack] e=" + e.getClass().getSimpleName(), e);
         throw e;
       }
     }
@@ -400,7 +400,7 @@ public class SpotifyServiceImpl implements SpotifyService
       }
       catch (Exception e)
       {
-        log.error("[getArtist] e=" + e.getClass().getSimpleName(), e);
+        log.error("[getTracks] e=" + e.getClass().getSimpleName(), e);
         throw e;
       }
     }
@@ -505,7 +505,7 @@ public class SpotifyServiceImpl implements SpotifyService
       }
       catch (Exception e)
       {
-        log.error("[getArtist] e=" + e.getClass().getSimpleName(), e);
+        log.error("[search] e=" + e.getClass().getSimpleName(), e);
         throw e;
       }
     }
