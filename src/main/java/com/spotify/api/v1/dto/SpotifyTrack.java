@@ -36,11 +36,11 @@ public class SpotifyTrack extends SpotifyItem
    * @param artist
    * @param album
    */
-  public SpotifyTrack(String id, String name, String href, String type, String uri, SpotifyAlbum album,
-                      SpotifyArtist... artists)
+  public SpotifyTrack(String id, String name, String href, String type, String uri,
+                      SpotifyAlbum album, SpotifyArtist... artists)
   {
     super(id, name, href, type, uri);
-    this.artists =  artists;
+    this.artists = artists;
     this.album = album;
   }
 

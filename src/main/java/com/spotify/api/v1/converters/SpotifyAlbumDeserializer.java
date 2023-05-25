@@ -50,6 +50,7 @@ public class SpotifyAlbumDeserializer extends SpotifyItemDeserializer<SpotifyAlb
     super.deserialize(node, spotifyAlbum);
 
     spotifyAlbum.setAlbumType(node.get("album_type").asText());
+    spotifyAlbum.setPopularity(node.get("popularity").asInt());
     spotifyAlbum.setReleaseDate(node.get("release_date").asText());
     spotifyAlbum.setReleaseDatePrecision(node.get("release_date_precision").asText());
     spotifyAlbum.setTotalTracks(node.get("total_tracks").asInt(0));

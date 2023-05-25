@@ -52,6 +52,8 @@ public class SpotifyArtistDeserializer extends SpotifyItemDeserializer<SpotifyAr
     {
       spotifyArtist.setImages(deserializeImages(imagesNode));
     }
+    
+    spotifyArtist.setPopularity(node.get("popularity").asInt());
 
     return spotifyArtist;
   }

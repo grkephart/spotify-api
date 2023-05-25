@@ -18,12 +18,13 @@ import com.spotify.api.v1.converters.SpotifyAlbumDeserializer;
 public class SpotifyAlbum extends SpotifyItem
 {
   public static final String ALBUM_TYPE       = "album";
-  public static final String SINGLE_TYPE      = "single";
   public static final String COMPILATION_TYPE = "compilation";
+  public static final String SINGLE_TYPE      = "single";
   private String             albumType;
   private SpotifyArtist[]    artists;
   private SpotifyImage[]     images;
   private boolean            imported;
+  private Integer            popularity;
   private String             releaseDate;
   private String             releaseDatePrecision;
   private int                totalTracks;
@@ -46,7 +47,7 @@ public class SpotifyAlbum extends SpotifyItem
                       String albumType, SpotifyArtist... artists)
   {
     super(id, name, href, type, uri);
-    this.artists =  artists;
+    this.artists = artists;
     this.albumType = albumType;
   }
 
@@ -98,6 +99,15 @@ public class SpotifyAlbum extends SpotifyItem
   public SpotifyImage[] getImages()
   {
     return images;
+  }
+
+
+  /**
+   * @return the popularity
+   */
+  public Integer getPopularity()
+  {
+    return popularity;
   }
 
 
@@ -195,6 +205,16 @@ public class SpotifyAlbum extends SpotifyItem
     boolean imported)
   {
     this.imported = imported;
+  }
+
+
+  /**
+   * @param popularity the popularity to set
+   */
+  public void setPopularity(
+    Integer popularity)
+  {
+    this.popularity = popularity;
   }
 
 

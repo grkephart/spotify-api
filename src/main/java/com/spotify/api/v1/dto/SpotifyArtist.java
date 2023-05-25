@@ -16,7 +16,7 @@ public class SpotifyArtist extends SpotifyItem
   private String[]       genres;
   private SpotifyImage[] images;
   private boolean        imported;
-  private int            popularity;
+  private Integer        popularity;
 
   /**
    * 
@@ -81,7 +81,7 @@ public class SpotifyArtist extends SpotifyItem
   /**
    * @return the popularity
    */
-  public int getPopularity()
+  public Integer getPopularity()
   {
     return popularity;
   }
@@ -130,7 +130,7 @@ public class SpotifyArtist extends SpotifyItem
    * @param popularity the popularity to set
    */
   public void setPopularity(
-    int popularity)
+    Integer popularity)
   {
     this.popularity = popularity;
   }
