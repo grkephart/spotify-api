@@ -8,6 +8,8 @@ import java.util.List;
 
 import com.spotify.api.v1.dto.SpotifyAlbum;
 import com.spotify.api.v1.dto.SpotifyArtist;
+import com.spotify.api.v1.dto.SpotifySimplifiedAlbum;
+import com.spotify.api.v1.dto.SpotifySimplifiedTrack;
 import com.spotify.api.v1.dto.SpotifyTrack;
 import com.spotify.api.v1.dto.responses.SpotifyContentResponse;
 import com.spotify.api.v1.dto.responses.SpotifySearchResponse;
@@ -36,7 +38,6 @@ public interface SpotifyService
 
   /**
    * Get Spotify catalog information about an album's tracks. Optional parameters can be used to limit the number of tracks returned.
-   * This does not return the album as part of the track.
    * 
    * @param id The Spotify ID of the album.
    * @param limit The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.
@@ -44,7 +45,7 @@ public interface SpotifyService
    * @param offset The index of the first item to return. Default: 0 (the first item). Use with limit to get the next set of items.
    * @return
    */
-  public SpotifyContentResponse<SpotifyTrack> getAlbumTracks(
+  public SpotifyContentResponse<SpotifySimplifiedTrack> getAlbumTracks(
     String id,
     Integer limit,
     String market,
@@ -53,14 +54,13 @@ public interface SpotifyService
 
   /**
    * Get Spotify catalog information about an album's tracks. 
-   * This is a "simple" track and therefore does not return the album or popularity as part of the track.
    * 
    * @param id The Spotify ID of the album.
    * @param market An ISO 3166-1 alpha-2 country code. If a country code is specified, only content that is available in that market will be returned.
    * @return
    * @throws Exception
    */
-  List<SpotifyTrack> getAlbumTracks(
+  List<SpotifySimplifiedTrack> getAlbumTracks(
     String id,
     String market) throws Exception;
 
@@ -83,7 +83,7 @@ public interface SpotifyService
    * @param offset The index of the first item to return. Default: 0 (the first item). Use with limit to get the next set of items.
    * @return
    */
-  public SpotifyContentResponse<SpotifyAlbum> getArtistAlbums(
+  public SpotifyContentResponse<SpotifySimplifiedAlbum> getArtistAlbums(
     String id,
     String includeGroups,
     Integer limit,
@@ -100,7 +100,7 @@ public interface SpotifyService
    * @return
    * @throws Exception
    */
-  List<SpotifyAlbum> getArtistAlbums(
+  List<SpotifySimplifiedAlbum> getArtistAlbums(
     String id,
     String includeGroups,
     String market) throws Exception;

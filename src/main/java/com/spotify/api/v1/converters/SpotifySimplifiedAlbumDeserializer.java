@@ -7,22 +7,12 @@ import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.spotify.api.v1.dto.SpotifyAlbum;
+import com.spotify.api.v1.dto.SpotifySimplifiedAlbum;
 
 
-public class SpotifyAlbumDeserializer extends SpotifyItemDeserializer<SpotifyAlbum>
+public class SpotifySimplifiedAlbumDeserializer
+    extends SpotifyItemDeserializer<SpotifySimplifiedAlbum>
 {
-
-  @Override
-  public SpotifyAlbum deserialize(
-    JsonParser parser,
-    DeserializationContext context) throws IOException, JacksonException
-  {
-    JsonNode node = parser.getCodec().readTree(parser);
-
-    return deserialize(node);
-  }
-
 
   /**  
    * @param node
@@ -30,17 +20,17 @@ public class SpotifyAlbumDeserializer extends SpotifyItemDeserializer<SpotifyAlb
    * @throws IOException 
    * @throws JacksonException 
    */
-  public SpotifyAlbum deserialize(
+  public SpotifySimplifiedAlbum deserialize(
     JsonNode node) throws JacksonException, IOException
   {
-    SpotifyAlbum spotifyAlbum = new SpotifyAlbum();
+    SpotifySimplifiedAlbum spotifyAlbum = new SpotifySimplifiedAlbum();
     JsonNode artistsNode = node.get("artists");
     JsonNode imagesNode = node.get("images");
     JsonNode popularityNode = node.get("popularity");
 
     if (artistsNode != null)
     {
-      spotifyAlbum.setArtists(deserializeArtists(artistsNode));
+      spotifyAlbum.setArtists(deserializeSimplifiedArtists(artistsNode));
     }
 
     if (imagesNode != null)
@@ -57,6 +47,20 @@ public class SpotifyAlbumDeserializer extends SpotifyItemDeserializer<SpotifyAlb
     spotifyAlbum.setTotalTracks(node.get("total_tracks").asInt(0));
 
     return spotifyAlbum;
+  }
+
+
+  /* (non-Javadoc)
+   * @see com.fasterxml.jackson.databind.JsonDeserializer#deserialize(com.fasterxml.jackson.core.JsonParser, com.fasterxml.jackson.databind.DeserializationContext)
+   */
+  @Override
+  public SpotifySimplifiedAlbum deserialize(
+    JsonParser parser,
+    DeserializationContext context) throws IOException, JacksonException
+  {
+    JsonNode node = parser.getCodec().readTree(parser);
+
+    return deserialize(node);
   }
 
 }

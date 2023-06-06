@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spotify.api.v1.dto.SpotifyAlbum;
 import com.spotify.api.v1.dto.SpotifyArtist;
+import com.spotify.api.v1.dto.SpotifySimplifiedAlbum;
+import com.spotify.api.v1.dto.SpotifySimplifiedTrack;
 import com.spotify.api.v1.dto.SpotifyTrack;
 import com.spotify.api.v1.dto.responses.SpotifyContentResponse;
 import com.spotify.api.v1.dto.responses.SpotifySearchResponse;
@@ -47,7 +49,7 @@ public interface FeignSpotifyService
    * @return
    */
   @GetMapping("/albums/{id}/tracks")
-  public SpotifyContentResponse<SpotifyTrack> getAlbumTracks(
+  public SpotifyContentResponse<SpotifySimplifiedTrack> getAlbumTracks(
     @RequestHeader("Authorization") String authorization,
     @PathVariable("id") String id,
     @RequestParam("limit") Integer limit,
@@ -77,7 +79,7 @@ public interface FeignSpotifyService
    * @return
    */
   @GetMapping("artists/{id}/albums")
-  public SpotifyContentResponse<SpotifyAlbum> getArtistAlbums(
+  public SpotifyContentResponse<SpotifySimplifiedAlbum> getArtistAlbums(
     @RequestHeader("Authorization") String authorization,
     @PathVariable("id") String id,
     @RequestParam("include_groups") String includeGroups,

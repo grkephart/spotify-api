@@ -4,6 +4,8 @@
 package com.spotify.api.v1.dto;
 
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -13,6 +15,24 @@ import java.util.Objects;
  */
 public class SpotifyItem
 {
+  /**
+   * @param <SI>
+   * @param spotifyItems
+   * @return
+   */
+  public static <SI extends SpotifyItem> Map<String, SI> toMap(
+    SI[] spotifyItems)
+  {
+    Map<String, SI> spotifyItemIds = new HashMap<>();
+
+    for (SI spotifyItem : spotifyItems)
+    {
+      spotifyItemIds.put(spotifyItem.getId(), spotifyItem);
+    }
+
+    return spotifyItemIds;
+  }
+
   private String href;
   private String id;
   private String name;
@@ -28,6 +48,13 @@ public class SpotifyItem
   }
 
 
+  /**
+   * @param id
+   * @param name
+   * @param href
+   * @param type
+   * @param uri
+   */
   public SpotifyItem(String id, String name, String href, String type, String uri)
   {
     this.id = id;
@@ -35,6 +62,15 @@ public class SpotifyItem
     this.href = href;
     this.type = type;
     this.uri = uri;
+  }
+
+
+  /**
+   * @param id
+   */
+  public SpotifyItem(String id)
+  {
+    this.id = id;
   }
 
 
@@ -51,7 +87,9 @@ public class SpotifyItem
       return false;
     if (getClass() != obj.getClass())
       return false;
+    
     SpotifyItem other = (SpotifyItem)obj;
+    
     return Objects.equals(href, other.href) //
            && Objects.equals(id, other.id)//
            && Objects.equals(name, other.name) //

@@ -10,21 +10,21 @@ import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.spotify.api.v1.dto.SpotifyArtist;
+import com.spotify.api.v1.dto.SpotifySimplifiedArtist;
 
 
 /**
  * @author gary_kephart
  *
  */
-public class SpotifyArtistDeserializer extends SpotifyItemDeserializer<SpotifyArtist>
+public class SpotifySimplifiedArtistDeserializer extends SpotifyItemDeserializer<SpotifySimplifiedArtist>
 {
 
   /* (non-Javadoc)
    * @see com.fasterxml.jackson.databind.JsonDeserializer#deserialize(com.fasterxml.jackson.core.JsonParser, com.fasterxml.jackson.databind.DeserializationContext)
    */
   @Override
-  public SpotifyArtist deserialize(
+  public SpotifySimplifiedArtist deserialize(
     JsonParser parser,
     DeserializationContext arg1) throws IOException, JacksonException
   {
@@ -40,22 +40,13 @@ public class SpotifyArtistDeserializer extends SpotifyItemDeserializer<SpotifyAr
    * @throws IOException
    * @throws JacksonException
    */
-  public SpotifyArtist deserialize(
+  public SpotifySimplifiedArtist deserialize(
     JsonNode node) throws IOException, JacksonException
   {
-    SpotifyArtist spotifyArtist = new SpotifyArtist();
-    JsonNode imagesNode = node.get("images");
-    JsonNode popularityNode = node.get("popularity"); // will be null in track search response: track/(simplified)album/(simplified)artists
+    SpotifySimplifiedArtist spotifyArtist = new SpotifySimplifiedArtist();
 
     super.deserialize(node, spotifyArtist);
-
-    if (imagesNode != null)
-    {
-      spotifyArtist.setImages(deserializeImages(imagesNode));
-    }
-
-    spotifyArtist.setPopularity(popularityNode == null ? null : popularityNode.asInt());
-
+ 
     return spotifyArtist;
   }
 

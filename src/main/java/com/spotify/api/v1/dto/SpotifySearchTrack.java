@@ -5,27 +5,27 @@ package com.spotify.api.v1.dto;
 
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.spotify.api.v1.converters.SpotifyTrackDeserializer;
+import com.spotify.api.v1.converters.SpotifySearchTrackDeserializer;
 
 
 /**
  * @author gary_kephart
  *
  */
-@JsonDeserialize(using = SpotifyTrackDeserializer.class)
-public class SpotifyTrack extends SpotifyItem
+@JsonDeserialize(using = SpotifySearchTrackDeserializer.class)
+public class SpotifySearchTrack extends SpotifyItem
 {
-  private SpotifyAlbum    album;
-  private SpotifyArtist[] artists;
-  private int             discNumber;
-  private int             duration;
-  private Integer         popularity;
-  private int             trackNumber;
+  private SpotifySimplifiedAlbum album;
+  private SpotifyArtist[]        artists;
+  private int                    discNumber;
+  private int                    duration;
+  private Integer                popularity;
+  private int                    trackNumber;
 
   /**
    * 
    */
-  public SpotifyTrack()
+  public SpotifySearchTrack()
   {
 
   }
@@ -36,8 +36,8 @@ public class SpotifyTrack extends SpotifyItem
    * @param artist
    * @param album
    */
-  public SpotifyTrack(String id, String name, String href, String type, String uri,
-                      SpotifyAlbum album, SpotifyArtist... artists)
+  public SpotifySearchTrack(String id, String name, String href, String type, String uri,
+                            SpotifySimplifiedAlbum album, SpotifyArtist... artists)
   {
     super(id, name, href, type, uri);
     this.artists = artists;
@@ -46,20 +46,9 @@ public class SpotifyTrack extends SpotifyItem
 
 
   /**
-   * @param searchTrack
-   */
-  public SpotifyTrack(SpotifySearchTrack searchTrack)
-  {
-    super(searchTrack.getId(), searchTrack.getName(), searchTrack.getHref(), searchTrack.getType(), searchTrack.getUri());
-    this.artists = searchTrack.getArtists();
-    this.album = new SpotifyAlbum(searchTrack.getAlbum());
-  }
-
-
-  /**
    * @return the album
    */
-  public SpotifyAlbum getAlbum()
+  public SpotifySimplifiedAlbum getAlbum()
   {
     return album;
   }
@@ -68,36 +57,34 @@ public class SpotifyTrack extends SpotifyItem
   /**
    * @return
    */
-  public String getAlbumArtistName()
+  public String getAlbumArtistIds()
   {
-    String albumArtistName = null;
-
-    if (this.album != null)
+    String[] artistIds = new String[this.artists.length];
+    int index = 0;
+    
+    for (SpotifyArtist artist : this.artists)
     {
-      SpotifyArtist[] spotifyArtists = album.getArtists();
-
-      if (spotifyArtists == null || spotifyArtists.length == 0)
-        albumArtistName = "none";
-      else
-      {
-        StringBuilder builder = new StringBuilder();
-        boolean first = true;
-
-        for (SpotifyArtist spotifyArtist : spotifyArtists)
-        {
-          if (!first)
-            builder.append(",");
-          else
-            first = false;
-
-          builder.append(spotifyArtist.getName());
-        }
-
-        albumArtistName = builder.toString();
-      }
+      artistIds[index++] = artist.getId();
     }
+    
+    return String.join(",", artistIds);
+  }
 
-    return albumArtistName;
+
+  /**
+   * @return
+   */
+  public String getAlbumArtistNames()
+  {
+    String[] artistNames = new String[this.artists.length];
+    int index = 0;
+    
+    for (SpotifyArtist artist : this.artists)
+    {
+      artistNames[index++] = artist.getName();
+    }
+    
+    return String.join(",", artistNames);
   }
 
 
@@ -150,7 +137,7 @@ public class SpotifyTrack extends SpotifyItem
    * @param album the album to set
    */
   public void setAlbum(
-    SpotifyAlbum album)
+    SpotifySimplifiedAlbum album)
   {
     this.album = album;
   }

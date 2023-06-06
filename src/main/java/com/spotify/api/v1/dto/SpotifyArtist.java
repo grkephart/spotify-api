@@ -6,16 +6,19 @@ package com.spotify.api.v1.dto;
 
 import java.util.Arrays;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.spotify.api.v1.converters.SpotifyArtistDeserializer;
+
 
 /**
  * @author gary_kephart
  *
  */
-public class SpotifyArtist extends SpotifyItem
+@JsonDeserialize(using = SpotifyArtistDeserializer.class)
+public class SpotifyArtist extends SpotifySimplifiedArtist
 {
   private String[]       genres;
   private SpotifyImage[] images;
-  private boolean        imported;
   private Integer        popularity;
 
   /**
@@ -27,6 +30,34 @@ public class SpotifyArtist extends SpotifyItem
   }
 
 
+  /**
+   * @param simplifiedArtist
+   */
+  public SpotifyArtist(SpotifySimplifiedArtist simplifiedArtist)
+  {
+    super(simplifiedArtist.getId(), simplifiedArtist.getName(), simplifiedArtist.getHref(),
+        simplifiedArtist.getType(), simplifiedArtist.getUri());
+
+    this.popularity = null;
+  }
+
+
+  /**
+   * @param id
+   */
+  public SpotifyArtist(String id)
+  {
+    super(id);
+  }
+
+
+  /**
+   * @param id
+   * @param name
+   * @param href
+   * @param type
+   * @param uri
+   */
   public SpotifyArtist(String id, String name, String href, String type, String uri)
   {
     super(id, name, href, type, uri);
@@ -88,15 +119,6 @@ public class SpotifyArtist extends SpotifyItem
 
 
   /**
-   * @return the imported
-   */
-  public boolean isImported()
-  {
-    return imported;
-  }
-
-
-  /**
    * @param genres the genres to set
    */
   public void setGenres(
@@ -113,16 +135,6 @@ public class SpotifyArtist extends SpotifyItem
     SpotifyImage[] images)
   {
     this.images = images;
-  }
-
-
-  /**
-   * @param imported the imported to set
-   */
-  public void setImported(
-    boolean imported)
-  {
-    this.imported = imported;
   }
 
 

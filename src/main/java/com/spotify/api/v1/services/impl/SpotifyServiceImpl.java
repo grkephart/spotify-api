@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 import com.spotify.api.v1.dto.SpotifyAlbum;
 import com.spotify.api.v1.dto.SpotifyArtist;
+import com.spotify.api.v1.dto.SpotifySimplifiedAlbum;
+import com.spotify.api.v1.dto.SpotifySimplifiedTrack;
 import com.spotify.api.v1.dto.SpotifyTrack;
 import com.spotify.api.v1.dto.responses.SpotifyContentResponse;
 import com.spotify.api.v1.dto.responses.SpotifySearchResponse;
@@ -136,14 +138,14 @@ public class SpotifyServiceImpl implements SpotifyService
    * @see org.drdeesw.reactrax.services.RateLimitedSpotifyService#getAlbumTracks(java.lang.String, java.lang.String, java.lang.Integer, java.lang.String, java.lang.Integer)
    */
   @Override
-  public SpotifyContentResponse<SpotifyTrack> getAlbumTracks(
+  public SpotifyContentResponse<SpotifySimplifiedTrack> getAlbumTracks(
     String id,
     Integer limit,
     String market,
     Integer offset) throws Exception
   {
     String authorization = this.spotifyAuthService.getSpotifyAuthorization();
-    SpotifyContentResponse<SpotifyTrack> response = null;
+    SpotifyContentResponse<SpotifySimplifiedTrack> response = null;
     int attempts = 0;
     boolean attempting = true;
 
@@ -181,18 +183,18 @@ public class SpotifyServiceImpl implements SpotifyService
    * @see com.spotify.api.v1.services.SpotifyService#getAlbumTracks(java.lang.String, java.lang.String, java.lang.String)
    */
   @Override
-  public List<SpotifyTrack> getAlbumTracks(
+  public List<SpotifySimplifiedTrack> getAlbumTracks(
     String id,
     String market) throws Exception
   {
-    List<SpotifyTrack> albumTracks = new ArrayList<SpotifyTrack>();
+    List<SpotifySimplifiedTrack> albumTracks = new ArrayList<SpotifySimplifiedTrack>();
     int offset = 0;
     Integer limit = SpotifyService.MAX_LIMIT;
     int total = 0;
 
     do
     {
-      SpotifyContentResponse<SpotifyTrack> response = getAlbumTracks(id, limit, market, offset);
+      SpotifyContentResponse<SpotifySimplifiedTrack> response = getAlbumTracks(id, limit, market, offset);
 
       albumTracks.addAll(Arrays.asList(response.getItems()));
       total = response.getTotal();
@@ -251,7 +253,7 @@ public class SpotifyServiceImpl implements SpotifyService
    * @see org.drdeesw.reactrax.services.RateLimitedSpotifyService#getArtistAlbums(java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.String, java.lang.Integer)
    */
   @Override
-  public SpotifyContentResponse<SpotifyAlbum> getArtistAlbums(
+  public SpotifyContentResponse<SpotifySimplifiedAlbum> getArtistAlbums(
     String id,
     String includeGroups,
     Integer limit,
@@ -259,7 +261,7 @@ public class SpotifyServiceImpl implements SpotifyService
     Integer offset) throws Exception
   {
     String authorization = this.spotifyAuthService.getSpotifyAuthorization();
-    SpotifyContentResponse<SpotifyAlbum> response = null;
+    SpotifyContentResponse<SpotifySimplifiedAlbum> response = null;
     int attempts = 0;
     boolean attempting = true;
 
@@ -298,19 +300,19 @@ public class SpotifyServiceImpl implements SpotifyService
    * @see org.drdeesw.reactrax.services.RateLimitedSpotifyService#getArtistAlbums(java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.String, java.lang.Integer)
    */
   @Override
-  public List<SpotifyAlbum> getArtistAlbums(
+  public List<SpotifySimplifiedAlbum> getArtistAlbums(
     String id,
     String includeGroups,
     String market) throws Exception
   {
-    List<SpotifyAlbum> artistAlbums = new ArrayList<SpotifyAlbum>();
+    List<SpotifySimplifiedAlbum> artistAlbums = new ArrayList<SpotifySimplifiedAlbum>();
     int offset = 0;
     Integer limit = SpotifyService.MAX_LIMIT;
     int total = 0;
 
     do
     {
-      SpotifyContentResponse<SpotifyAlbum> response = getArtistAlbums(id, includeGroups, limit,
+      SpotifyContentResponse<SpotifySimplifiedAlbum> response = getArtistAlbums(id, includeGroups, limit,
         market, offset);
 
       artistAlbums.addAll(Arrays.asList(response.getItems()));
