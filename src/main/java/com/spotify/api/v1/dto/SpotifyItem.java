@@ -33,11 +33,12 @@ public class SpotifyItem
     return spotifyItemIds;
   }
 
-  private String href;
-  private String id;
-  private String name;
-  private String type;
-  private String uri;
+  private String  href;
+  private String  id;
+  private boolean imported;
+  private String  name;
+  private String  type;
+  private String  uri;
 
   /**
    * 
@@ -45,6 +46,15 @@ public class SpotifyItem
   public SpotifyItem()
   {
 
+  }
+
+
+  /**
+   * @param id
+   */
+  public SpotifyItem(String id)
+  {
+    this.id = id;
   }
 
 
@@ -65,15 +75,6 @@ public class SpotifyItem
   }
 
 
-  /**
-   * @param id
-   */
-  public SpotifyItem(String id)
-  {
-    this.id = id;
-  }
-
-
   /* (non-Javadoc)
    * @see java.lang.Object#equals(java.lang.Object)
    */
@@ -87,9 +88,9 @@ public class SpotifyItem
       return false;
     if (getClass() != obj.getClass())
       return false;
-    
+
     SpotifyItem other = (SpotifyItem)obj;
-    
+
     return Objects.equals(href, other.href) //
            && Objects.equals(id, other.id)//
            && Objects.equals(name, other.name) //
@@ -163,6 +164,17 @@ public class SpotifyItem
 
 
   /**
+   * Useful when importing Spotify items into your system.
+   * 
+   * @return the imported
+   */
+  public boolean isImported()
+  {
+    return imported;
+  }
+
+
+  /**
    * @param href the href to set
    */
   public void setHref(
@@ -179,6 +191,16 @@ public class SpotifyItem
     String id)
   {
     this.id = id;
+  }
+
+
+  /**
+   * @param imported the imported to set
+   */
+  public void setImported(
+    boolean imported)
+  {
+    this.imported = imported;
   }
 
 
