@@ -9,6 +9,7 @@ import java.util.List;
 import com.spotify.api.v1.dto.SpotifyAlbum;
 import com.spotify.api.v1.dto.SpotifyArtist;
 import com.spotify.api.v1.dto.SpotifySimplifiedAlbum;
+import com.spotify.api.v1.dto.SpotifySimplifiedArtist;
 import com.spotify.api.v1.dto.SpotifySimplifiedTrack;
 import com.spotify.api.v1.dto.SpotifyTrack;
 import com.spotify.api.v1.dto.responses.SpotifyContentResponse;
@@ -104,6 +105,16 @@ public interface SpotifyService
     String id,
     String includeGroups,
     String market) throws Exception;
+
+
+  /**
+   * Convert a set of SpotifySimplifiedArtist to SpotifyArtist.
+   * 
+   * @param spotifySimplifiedArtists a set of SpotifySimplifiedArtist. Assuming no more than MAX_LIMIT values.
+   * @return the equivalent set of SpotifyArtist, but not necessarily in the same order.
+   */
+  public SpotifyArtist[] getArtists(
+    SpotifySimplifiedArtist[] spotifySimplifiedArtists);
 
 
   /**

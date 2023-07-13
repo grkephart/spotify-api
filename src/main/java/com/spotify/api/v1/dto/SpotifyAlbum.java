@@ -13,9 +13,9 @@ import com.spotify.api.v1.converters.SpotifyAlbumDeserializer;
  *
  */
 @JsonDeserialize(using = SpotifyAlbumDeserializer.class)
-public class SpotifyAlbum extends AbstractSpotifyAlbum
+public class SpotifyAlbum extends AbstractSpotifyAlbum<SpotifyArtist>
 {
-  private SpotifyArtist[] artists;
+//  private SpotifyArtist[] artists;
 
   /**
    * 
@@ -33,7 +33,8 @@ public class SpotifyAlbum extends AbstractSpotifyAlbum
   {
     super(album.getId(), album.getName(), album.getHref(), album.getType(), album.getUri(),
         album.getAlbumType());
-    this.artists = convert(album.getArtists());
+//    this.artists = convert(album.getArtists());
+    setArtists(convert(album.getArtists()));
   }
 
 
@@ -45,8 +46,8 @@ public class SpotifyAlbum extends AbstractSpotifyAlbum
   public SpotifyAlbum(String id, String name, String href, String type, String uri,
                       String albumType, SpotifyArtist... artists)
   {
-    super(id, name, href, type, uri, albumType);
-    this.artists = artists;
+    super(id, name, href, type, uri, albumType, artists);
+//    this.artists = artists;
   }
 
 
@@ -69,22 +70,22 @@ public class SpotifyAlbum extends AbstractSpotifyAlbum
   }
 
 
-  /**
-   * @return the artists
-   */
-  public SpotifyArtist[] getArtists()
-  {
-    return artists;
-  }
-
-
-  /**
-   * @param artists the artists to set
-   */
-  public void setArtists(
-    SpotifyArtist[] artists)
-  {
-    this.artists = artists;
-  }
+//  /**
+//   * @return the artists
+//   */
+//  public SpotifyArtist[] getArtists()
+//  {
+//    return artists;
+//  }
+//
+//
+//  /**
+//   * @param artists the artists to set
+//   */
+//  public void setArtists(
+//    SpotifyArtist[] artists)
+//  {
+//    this.artists = artists;
+//  }
 
 }

@@ -9,7 +9,7 @@ import java.util.Objects;
  * @author gary_kephart
  *
  */
-public class AbstractSpotifyAlbum extends SpotifyItem
+public class AbstractSpotifyAlbum<A extends SpotifySimplifiedArtist> extends SpotifyItem
 {
 
   public static final String ALBUM_TYPE       = "album";
@@ -21,6 +21,7 @@ public class AbstractSpotifyAlbum extends SpotifyItem
   private String             releaseDate;
   private String             releaseDatePrecision;
   private int                totalTracks;
+  private A[] artists;
 
   /**
    * 
@@ -46,10 +47,11 @@ public class AbstractSpotifyAlbum extends SpotifyItem
    * @param type
    * @param uri
    */
-  public AbstractSpotifyAlbum(String id, String name, String href, String type, String uri, String albumType)
+  public AbstractSpotifyAlbum(String id, String name, String href, String type, String uri, String albumType, A... artists)
   {
     super(id, name, href, type, uri);
     this.albumType = albumType;
+    this.artists = artists;
   }
 
 
@@ -189,7 +191,7 @@ public class AbstractSpotifyAlbum extends SpotifyItem
       return false;
     if (getClass() != obj.getClass())
       return false;
-    AbstractSpotifyAlbum other = (AbstractSpotifyAlbum)obj;
+    AbstractSpotifyAlbum<A> other = (AbstractSpotifyAlbum<A>)obj;
     return Objects.equals(albumType, other.albumType)
            //           && Objects.equals(releaseDate, other.releaseDate)
            //           && Objects.equals(releaseDatePrecision, other.releaseDatePrecision)
@@ -210,4 +212,22 @@ public class AbstractSpotifyAlbum extends SpotifyItem
     return result;
   }
 
+
+  /**
+   * @return the artists
+   */
+  public A[] getArtists()
+  {
+    return artists;
+  }
+
+
+  /**
+   * @param artists the artists to set
+   */
+  public void setArtists(
+    A[] artists)
+  {
+    this.artists = artists;
+  }
 }

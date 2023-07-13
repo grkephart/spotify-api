@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 import com.spotify.api.v1.dto.SpotifyAlbum;
 import com.spotify.api.v1.dto.SpotifyArtist;
 import com.spotify.api.v1.dto.SpotifySimplifiedAlbum;
+import com.spotify.api.v1.dto.SpotifySimplifiedArtist;
 import com.spotify.api.v1.dto.SpotifySimplifiedTrack;
 import com.spotify.api.v1.dto.SpotifyTrack;
 import com.spotify.api.v1.dto.responses.SpotifyContentResponse;
@@ -47,14 +50,14 @@ public class SpotifyServiceImpl implements SpotifyService
 
   private DateFormat          df;
 
-  @Autowired
-  private FeignSpotifyService service;
-
   /**
    * The maximum number of attempts at a specific Spotify call.
    */
   @Value("${spotify.maxAttemptsPerCall}")
   private int                 maxAttemptsPerCall;
+
+  @Autowired
+  private FeignSpotifyService service;
 
   /**
    * The amount of time, in ms, to pause the current thread before making a Spotify call.
@@ -323,6 +326,29 @@ public class SpotifyServiceImpl implements SpotifyService
     } while (offset < total);
 
     return artistAlbums;
+  }
+
+
+  /* (non-Javadoc)
+   * @see com.spotify.api.v1.services.SpotifyService#getArtists(com.spotify.api.v1.dto.SpotifySimplifiedArtist[])
+   */
+  @Override
+  public SpotifyArtist[] getArtists(
+    SpotifySimplifiedArtist[] spotifySimplifiedArtists)
+  {
+    String authorization = this.spotifyAuthService.getSpotifyAuthorization();
+    Set<String> idSet = new HashSet<String>();
+    
+    for (SpotifySimplifiedArtist spotifySimplifiedArtist : spotifySimplifiedArtists)
+    {
+      idSet.add(spotifySimplifiedArtist.getId());
+    }
+    
+    String[] ids = new String[idSet.size()];
+
+    ids = idSet.toArray(ids);
+        
+    return this.service.getArtists(authorization, String.join(",", ids)).getArtists();
   }
 
 

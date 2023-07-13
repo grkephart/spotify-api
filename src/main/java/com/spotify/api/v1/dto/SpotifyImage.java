@@ -4,6 +4,9 @@
 package com.spotify.api.v1.dto;
 
 
+import java.util.Objects;
+
+
 /**
  * @author gary_kephart
  *
@@ -24,6 +27,24 @@ public class SpotifyImage
    * The image width in pixels.
    */
   private int    width;
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
+  @Override
+  public boolean equals(
+    Object obj)
+  {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    SpotifyImage other = (SpotifyImage)obj;
+    return height == other.height && Objects.equals(url, other.url) && width == other.width;
+  }
+
 
   /**
    * @return the height
@@ -49,6 +70,16 @@ public class SpotifyImage
   public int getWidth()
   {
     return width;
+  }
+
+
+  /* (non-Javadoc)
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(height, url, width);
   }
 
 

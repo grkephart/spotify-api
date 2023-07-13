@@ -15,6 +15,7 @@ import com.spotify.api.v1.dto.SpotifyArtist;
 import com.spotify.api.v1.dto.SpotifySimplifiedAlbum;
 import com.spotify.api.v1.dto.SpotifySimplifiedTrack;
 import com.spotify.api.v1.dto.SpotifyTrack;
+import com.spotify.api.v1.dto.responses.SpotifyArtistsResponse;
 import com.spotify.api.v1.dto.responses.SpotifyContentResponse;
 import com.spotify.api.v1.dto.responses.SpotifySearchResponse;
 import com.spotify.api.v1.dto.responses.SpotifyTracksResponse;
@@ -56,7 +57,7 @@ public interface FeignSpotifyService
     @RequestParam("market") String market,
     @RequestParam("offset") Integer offset);
 
-  
+ 
   
   /**
    * @param authorization
@@ -66,8 +67,8 @@ public interface FeignSpotifyService
   @GetMapping("artists/{id}")
   public SpotifyArtist getArtist(
     @RequestHeader("Authorization") String authorization,
-    @RequestParam("id") String id);
-  
+    @PathVariable("id") String id);
+ 
   
   /**
    * @param authorization
@@ -90,6 +91,17 @@ public interface FeignSpotifyService
   
   /**
    * @param authorization
+   * @param A comma-separated list of the Spotify IDs for the artists. Maximum: 50 IDs.
+   * @return
+   */
+  @GetMapping("artists")
+  public SpotifyArtistsResponse getArtists(
+    @RequestHeader("Authorization") String authorization,
+    @RequestParam("ids") String ids);
+  
+  
+  /**
+   * @param authorization
    * @param id
    * @return
    */
@@ -97,8 +109,8 @@ public interface FeignSpotifyService
   public SpotifyTrack getTrack(
     @RequestHeader("Authorization") String authorization,
     @PathVariable("id") String id);
-  
-  
+
+
   /**
    * Get Spotify catalog information for multiple tracks based on their Spotify IDs.
    * 
@@ -111,8 +123,6 @@ public interface FeignSpotifyService
     @RequestHeader("Authorization") String authorization,
     @RequestParam("ids") String ids,
     @RequestParam("market") String market);
-
-
 
   /**
    * @param authorization

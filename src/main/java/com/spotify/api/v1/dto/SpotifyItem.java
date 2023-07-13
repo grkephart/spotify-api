@@ -4,6 +4,7 @@
 package com.spotify.api.v1.dto;
 
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -22,6 +23,25 @@ public class SpotifyItem
    */
   public static <SI extends SpotifyItem> Map<String, SI> toMap(
     SI[] spotifyItems)
+  {
+    Map<String, SI> spotifyItemIds = new HashMap<>();
+
+    for (SI spotifyItem : spotifyItems)
+    {
+      spotifyItemIds.put(spotifyItem.getId(), spotifyItem);
+    }
+
+    return spotifyItemIds;
+  }
+  
+  
+  /**
+   * @param <SI>
+   * @param spotifyItems
+   * @return
+   */
+  public static <SI extends SpotifyItem> Map<String, SI> toMap(
+    Collection<SI> spotifyItems)
   {
     Map<String, SI> spotifyItemIds = new HashMap<>();
 

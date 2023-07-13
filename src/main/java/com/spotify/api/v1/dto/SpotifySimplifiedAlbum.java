@@ -17,9 +17,9 @@ import com.spotify.api.v1.converters.SpotifySimplifiedAlbumDeserializer;
  *
  */
 @JsonDeserialize(using = SpotifySimplifiedAlbumDeserializer.class)
-public class SpotifySimplifiedAlbum extends AbstractSpotifyAlbum
+public class SpotifySimplifiedAlbum extends AbstractSpotifyAlbum<SpotifySimplifiedArtist>
 {
-  private SpotifySimplifiedArtist[] artists;
+  //private SpotifySimplifiedArtist[] artists;
 
   /**
    * 
@@ -38,27 +38,27 @@ public class SpotifySimplifiedAlbum extends AbstractSpotifyAlbum
   public SpotifySimplifiedAlbum(String id, String name, String href, String type, String uri,
                                 String albumType, SpotifySimplifiedArtist... artists)
   {
-    super(id, name, href, type, uri, albumType);
-    this.artists = artists;
+    super(id, name, href, type, uri, albumType, artists);
+//    this.artists = artists;
   }
 
 
 
-  /**
-   * @return the artists
-   */
-  public SpotifySimplifiedArtist[] getArtists()
-  {
-    return artists;
-  }
-
-
-  /**
-   * @param artists the artists to set
-   */
-  public void setArtists(
-    SpotifySimplifiedArtist[] artists)
-  {
-    this.artists = artists;
-  }
+//  /**
+//   * @return the artists
+//   */
+//  public SpotifySimplifiedArtist[] getArtists()
+//  {
+//    return artists;
+//  }
+//
+//
+//  /**
+//   * @param artists the artists to set
+//   */
+//  public void setArtists(
+//    SpotifySimplifiedArtist[] artists)
+//  {
+//    this.artists = artists;
+//  }
 }
