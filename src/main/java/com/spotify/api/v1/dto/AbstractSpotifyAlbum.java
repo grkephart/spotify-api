@@ -3,7 +3,9 @@
  */
 package com.spotify.api.v1.dto;
 
+
 import java.util.Objects;
+
 
 /**
  * @author gary_kephart
@@ -21,7 +23,7 @@ public class AbstractSpotifyAlbum<A extends SpotifySimplifiedArtist> extends Spo
   private String             releaseDate;
   private String             releaseDatePrecision;
   private int                totalTracks;
-  private A[] artists;
+  private A[]                artists;
 
   /**
    * 
@@ -47,7 +49,8 @@ public class AbstractSpotifyAlbum<A extends SpotifySimplifiedArtist> extends Spo
    * @param type
    * @param uri
    */
-  public AbstractSpotifyAlbum(String id, String name, String href, String type, String uri, String albumType, A... artists)
+  public AbstractSpotifyAlbum(String id, String name, String href, String type, String uri,
+                              String albumType, A... artists)
   {
     super(id, name, href, type, uri);
     this.albumType = albumType;
@@ -219,6 +222,28 @@ public class AbstractSpotifyAlbum<A extends SpotifySimplifiedArtist> extends Spo
   public A[] getArtists()
   {
     return artists;
+  }
+
+
+  /**
+   * @return
+   */
+  public String getArtistNames()
+  {
+    if (this.artists != null)
+    {
+      String[] artistNames = new String[this.artists.length];
+      int index = 0;
+
+      for (A artist : this.artists)
+      {
+        artistNames[index++] = artist.getName();
+      }
+      
+      return String.join(",", artistNames);
+    }
+    else
+      return "";
   }
 
 
