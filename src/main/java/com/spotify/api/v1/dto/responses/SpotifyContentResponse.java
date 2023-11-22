@@ -74,6 +74,10 @@ public class SpotifyContentResponse<I extends SpotifyItem>
     return total;
   }
 
+  public boolean isEmpty()
+  {
+    return this.items == null || this.items.length == 0;
+  }
 
   /**
    * @param href the href to set

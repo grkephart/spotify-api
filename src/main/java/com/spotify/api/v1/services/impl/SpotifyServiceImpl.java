@@ -100,7 +100,8 @@ public class SpotifyServiceImpl implements SpotifyService
    */
   @Override
   public SpotifyAlbum getAlbum(
-    String id) throws Exception
+    String id,
+    boolean sleepOnRetry) throws Exception
   {
     String authorization = this.spotifyAuthService.getSpotifyAuthorization();
     SpotifyAlbum response = null;
@@ -120,7 +121,7 @@ public class SpotifyServiceImpl implements SpotifyService
       }
       catch (RetryableException e)
       {
-        handleRetryableException(++attempts, e);
+        handleRetryableException(sleepOnRetry, ++attempts, e);
       }
       catch (Unauthorized e)
       {
@@ -145,7 +146,8 @@ public class SpotifyServiceImpl implements SpotifyService
     String id,
     Integer limit,
     String market,
-    Integer offset) throws Exception
+    Integer offset,
+    boolean sleepOnRetry) throws Exception
   {
     String authorization = this.spotifyAuthService.getSpotifyAuthorization();
     SpotifyContentResponse<SpotifySimplifiedTrack> response = null;
@@ -165,7 +167,7 @@ public class SpotifyServiceImpl implements SpotifyService
       }
       catch (RetryableException e)
       {
-        handleRetryableException(++attempts, e);
+        handleRetryableException(sleepOnRetry, ++attempts, e);
       }
       catch (Unauthorized e)
       {
@@ -188,7 +190,8 @@ public class SpotifyServiceImpl implements SpotifyService
   @Override
   public List<SpotifySimplifiedTrack> getAlbumTracks(
     String id,
-    String market) throws Exception
+    String market,
+    boolean sleepOnRetry) throws Exception
   {
     List<SpotifySimplifiedTrack> albumTracks = new ArrayList<SpotifySimplifiedTrack>();
     int offset = 0;
@@ -197,7 +200,8 @@ public class SpotifyServiceImpl implements SpotifyService
 
     do
     {
-      SpotifyContentResponse<SpotifySimplifiedTrack> response = getAlbumTracks(id, limit, market, offset);
+      SpotifyContentResponse<SpotifySimplifiedTrack> response = getAlbumTracks(id, limit, market,
+        offset, sleepOnRetry);
 
       albumTracks.addAll(Arrays.asList(response.getItems()));
       total = response.getTotal();
@@ -215,7 +219,8 @@ public class SpotifyServiceImpl implements SpotifyService
    */
   @Override
   public SpotifyArtist getArtist(
-    String id) throws Exception
+    String id,
+    boolean sleepOnRetry) throws Exception
   {
     String authorization = this.spotifyAuthService.getSpotifyAuthorization();
     SpotifyArtist response = null;
@@ -235,7 +240,7 @@ public class SpotifyServiceImpl implements SpotifyService
       }
       catch (RetryableException e)
       {
-        handleRetryableException(++attempts, e);
+        handleRetryableException(sleepOnRetry, ++attempts, e);
       }
       catch (Unauthorized e)
       {
@@ -261,7 +266,8 @@ public class SpotifyServiceImpl implements SpotifyService
     String includeGroups,
     Integer limit,
     String market,
-    Integer offset) throws Exception
+    Integer offset,
+    boolean sleepOnRetry) throws Exception
   {
     String authorization = this.spotifyAuthService.getSpotifyAuthorization();
     SpotifyContentResponse<SpotifySimplifiedAlbum> response = null;
@@ -282,7 +288,7 @@ public class SpotifyServiceImpl implements SpotifyService
       }
       catch (RetryableException e)
       {
-        handleRetryableException(++attempts, e);
+        handleRetryableException(sleepOnRetry, ++attempts, e);
       }
       catch (Unauthorized e)
       {
@@ -306,7 +312,8 @@ public class SpotifyServiceImpl implements SpotifyService
   public List<SpotifySimplifiedAlbum> getArtistAlbums(
     String id,
     String includeGroups,
-    String market) throws Exception
+    String market,
+    boolean sleepOnRetry) throws Exception
   {
     List<SpotifySimplifiedAlbum> artistAlbums = new ArrayList<SpotifySimplifiedAlbum>();
     int offset = 0;
@@ -315,8 +322,8 @@ public class SpotifyServiceImpl implements SpotifyService
 
     do
     {
-      SpotifyContentResponse<SpotifySimplifiedAlbum> response = getArtistAlbums(id, includeGroups, limit,
-        market, offset);
+      SpotifyContentResponse<SpotifySimplifiedAlbum> response = getArtistAlbums(id, includeGroups,
+        limit, market, offset, sleepOnRetry);
 
       artistAlbums.addAll(Arrays.asList(response.getItems()));
       total = response.getTotal();
@@ -338,16 +345,16 @@ public class SpotifyServiceImpl implements SpotifyService
   {
     String authorization = this.spotifyAuthService.getSpotifyAuthorization();
     Set<String> idSet = new HashSet<String>();
-    
+
     for (SpotifySimplifiedArtist spotifySimplifiedArtist : spotifySimplifiedArtists)
     {
       idSet.add(spotifySimplifiedArtist.getId());
     }
-    
+
     String[] ids = new String[idSet.size()];
 
     ids = idSet.toArray(ids);
-        
+
     return this.service.getArtists(authorization, String.join(",", ids)).getArtists();
   }
 
@@ -357,7 +364,8 @@ public class SpotifyServiceImpl implements SpotifyService
    */
   @Override
   public SpotifyTrack getTrack(
-    String id) throws Exception
+    String id,
+    boolean sleepOnRetry) throws Exception
   {
     String authorization = this.spotifyAuthService.getSpotifyAuthorization();
     SpotifyTrack response = null;
@@ -377,7 +385,7 @@ public class SpotifyServiceImpl implements SpotifyService
       }
       catch (RetryableException e)
       {
-        handleRetryableException(++attempts, e);
+        handleRetryableException(sleepOnRetry, ++attempts, e);
       }
       catch (Unauthorized e)
       {
@@ -400,7 +408,8 @@ public class SpotifyServiceImpl implements SpotifyService
   @Override
   public List<SpotifyTrack> getTracks(
     String ids,
-    String market) throws Exception
+    String market,
+    boolean sleepOnRetry) throws Exception
   {
     String authorization = this.spotifyAuthService.getSpotifyAuthorization();
     SpotifyTracksResponse response = null;
@@ -420,7 +429,7 @@ public class SpotifyServiceImpl implements SpotifyService
       }
       catch (RetryableException e)
       {
-        handleRetryableException(++attempts, e);
+        handleRetryableException(sleepOnRetry, ++attempts, e);
       }
       catch (Unauthorized e)
       {
@@ -438,15 +447,17 @@ public class SpotifyServiceImpl implements SpotifyService
 
 
   /**
+   * @param sleepOnRetry TODO
    * @param attempts
    * @param e
    * @throws InterruptedException
    */
   private void handleRetryableException(
+    boolean sleepOnRetry,
     int attempts,
     RetryableException e) throws InterruptedException
   {
-    if (attempts > this.maxAttemptsPerCall)
+    if (attempts > this.maxAttemptsPerCall || !sleepOnRetry)
     {
       throw e;
     }
@@ -470,7 +481,7 @@ public class SpotifyServiceImpl implements SpotifyService
       else
       {
         log.error("[handleRetryableException] no retryAfter.");
-        
+
         throw e;
       }
     }
@@ -505,7 +516,8 @@ public class SpotifyServiceImpl implements SpotifyService
     String includeExternal,
     Integer limit,
     String market,
-    Integer offset) throws Exception
+    Integer offset,
+    boolean sleepOnRetry) throws Exception
   {
     String authorization = this.spotifyAuthService.getSpotifyAuthorization();
     SpotifySearchResponse response = null;
@@ -525,7 +537,7 @@ public class SpotifyServiceImpl implements SpotifyService
       }
       catch (RetryableException e)
       {
-        handleRetryableException(++attempts, e);
+        handleRetryableException(sleepOnRetry, ++attempts, e);
       }
       catch (Unauthorized e)
       {
