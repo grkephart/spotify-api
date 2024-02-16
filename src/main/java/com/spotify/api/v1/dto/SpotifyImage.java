@@ -42,7 +42,9 @@ public class SpotifyImage
     if (getClass() != obj.getClass())
       return false;
     SpotifyImage other = (SpotifyImage)obj;
-    return height == other.height && Objects.equals(url, other.url) && width == other.width;
+    
+    // URL can change. height and width are the only defining properties.
+    return height == other.height && width == other.width;
   }
 
 
@@ -52,6 +54,17 @@ public class SpotifyImage
   public int getHeight()
   {
     return height;
+  }
+
+
+  /**
+   * Just "width x height".
+   * 
+   * @return
+   */
+  public String getKey()
+  {
+    return this.width + "x" + this.height;
   }
 
 
